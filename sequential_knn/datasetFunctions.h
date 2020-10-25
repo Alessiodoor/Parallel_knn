@@ -44,5 +44,13 @@ void writeResult(
 	int attributes, 
 	float totalTime,
 	char *fileName);
-
+/*
+void writeResultJson(
+	int k, 
+	int trainSize, 
+	int testSize, 
+	int attributes, 
+	float totalTime,
+	char *fileName);
+*/
 #endif

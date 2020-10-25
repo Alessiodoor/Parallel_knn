@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 In questo file sono presenti tutte le funzioni utili per interagire con i dati di train e test
@@ -68,6 +68,21 @@ totalTime: tempo d'esecuzione che si vuole salvare
 fileName: nome del file di destinazione
 */
 void writeResult(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
+	FILE *fptr;
+	fptr = fopen(fileName, "w");
+
+	if(fptr == NULL)  {
+      	printf("Errore scrittuta file");   
+      	exit(1);             
+   	}
+
+   	fprintf(fptr, "Test with K = %d trainingData %d and testingData: %d, time: %f\n\n", k, trainSize, testSize, totalTime);
+
+	fclose(fptr);
+}
+
+/*
+void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 
 	cJSON_AddNumberToObject(result, "K", k);
@@ -91,5 +106,4 @@ void writeResult(int k, int trainSize, int testSize, int attributes, float total
 	fclose(fptr);
 	cJSON_Delete(result);
 }
-
-
+*/
