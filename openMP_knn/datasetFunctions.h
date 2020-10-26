@@ -1,6 +1,7 @@
 #ifndef DATASETFUNCTIONS_H
 #define DATASETFUNCTIONS_H 
 
+#include <stdint.h> 
 #include <cjson/cJSON.h>
 
 /*
@@ -17,7 +18,7 @@ void readFile(
 	int lines, 
 	int Nfeatures, 
 	float* data, 
-	int * labels);
+	uint8_t* labels);
 
 
 void readArguments(

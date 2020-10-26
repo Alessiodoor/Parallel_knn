@@ -1,18 +1,20 @@
+#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <stdint.h>
 
 #include "datasetFunctions.h"
-#include "knn.h"
+
 // attributi
 #define A 30
 // labels
 #define LABELS 10
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-   //imposto la variabile che conterrà il tempo di partenza dell'esecuzione
+	//imposto la variabile che conterrà il tempo di partenza dell'esecuzione
    clock_t start; 
    start = clock();
 
@@ -32,13 +34,6 @@ int main(int argc, char const *argv[])
          "5 - K: numero di vicini");
       exit(EXIT_FAILURE);
    }
-
-   // Read arguments from json
-   //const cJSON* arguments = cJSON_CreateObject();;
-   //readArguments(arguments, "arguments.json");
-   //printf("%s\n", cJSON_Print(arguments));
-   //int Kprova = cJSON_GetObjectItemCaseSensitive(arguments, "K")->valueint;
-   //printf("%d\n", Kprova);
 
    const char * trainFile = argv[1];
    const char * testFile = argv[2];
@@ -60,10 +55,10 @@ int main(int argc, char const *argv[])
    float * testData = (float *) malloc(M * A * sizeof(float));
 
    // vettore delle classi di train e test 
-   int * classesTraining = (int*) malloc(N *sizeof(int));
-   int * classesTesting = (int*)  malloc(M *sizeof(int));
+   uint8_t * classesTraining = (uint8_t*) malloc(N *sizeof(uint8_t));
+   uint8_t * classesTesting = (uint8_t*)  malloc(M *sizeof(uint8_t));
 
-   // Controllo di aver allocato correttamente la memoria
+	// Controllo di aver allocato correttamente la memoria
    if(trainData == NULL || testData == NULL || classesTesting == NULL || classesTraining == NULL){
       printf("Memoria insufficiente\n");
       exit(EXIT_FAILURE);
@@ -72,22 +67,6 @@ int main(int argc, char const *argv[])
    // leggo i dati di train e test
    readFile(trainFile, N, A, trainData, classesTraining);
    readFile(testFile, M, A, testData, classesTesting);
-
-   // eseguo knn
-   knn(trainData, testData, classesTraining, classesTesting, K, N, M);
-
-   // Libero la memoria utilizzata
-   free(trainData); trainData = NULL;
-   free(testData); testData = NULL;
-   free(classesTraining); classesTraining = NULL;
-   free(classesTesting); classesTesting = NULL;
-
-   //calcolo tempo d'esecuzione totale
-   float totaltime = (float)(clock() - start)/ (float) CLOCKS_PER_SEC;
-   //printf("total time: %f \n", totaltime);
-
-   //writeResult(K, N, M, A, totaltime, "result.txt");
-   writeResultJson(K, N, M, A, totaltime, "result.json");
 
 	return 0;
 }

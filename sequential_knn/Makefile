@@ -1,5 +1,5 @@
 main: main.o datasetFunctions.o knn.o
-	gcc -std=c99 -o main.exe main.o datasetFunctions.o knn.o -lm
+	gcc -std=c99 -o main.exe main.o datasetFunctions.o knn.o -lm -I/usr/local/include -L/usr/local/lib -Wl,-rpath=/usr/local/lib -l cjson
 
 main.o:
 	gcc -std=c99 -c main.c -o main.o -lm
@@ -12,7 +12,7 @@ knn.o:
 
 clean:
 	rm -f *.o
-	rm main
+	rm main.exe
 
 .PHONY: main
 
