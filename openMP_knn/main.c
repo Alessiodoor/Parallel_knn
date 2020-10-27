@@ -6,17 +6,20 @@
 #include <stdint.h>
 
 #include "datasetFunctions.h"
+#include "knnOMP.h"
 
 // attributi
 #define A 30
 // labels
 #define LABELS 10
+// numtreads
+#define NT 32
 
 int main(int argc, char *argv[])
 {
 	//imposto la variabile che conterrà il tempo di partenza dell'esecuzione
-   clock_t start; 
-   start = clock();
+   	double start = omp_get_wtime();
+   	double executionTime;
 
    // argomenti:
    // train file name
@@ -60,13 +63,24 @@ int main(int argc, char *argv[])
 
 	// Controllo di aver allocato correttamente la memoria
    if(trainData == NULL || testData == NULL || classesTesting == NULL || classesTraining == NULL){
-      printf("Memoria insufficiente\n");
+      printf("Memoria insufficiente per assegnare il dataset\n");
       exit(EXIT_FAILURE);
    }
 
-   // leggo i dati di train e test
-   readFile(trainFile, N, A, trainData, classesTraining);
-   readFile(testFile, M, A, testData, classesTesting);
+   	// leggo i dati di train e test
+   	readFile(trainFile, N, A, trainData, classesTraining);
+   	readFile(testFile, M, A, testData, classesTesting);
+
+   	knn(NT, trainData, testData, classesTraining, classesTesting, K, N, M, start);
+
+   	// Libero la memoria utilizzata
+   	free(trainData); trainData = NULL;
+   	free(testData); testData = NULL;
+   	free(classesTraining); classesTraining = NULL;
+   	free(classesTesting); classesTesting = NULL;
+
+   	executionTime = omp_get_wtime() - start;
+   	writeResultJson(K, N, M, A, executionTime, "resultsOpenMP.json");
 
 	return 0;
 }
