@@ -126,7 +126,7 @@ void knn(
 	#pragma omp parallel default(none), shared(start, trainingData, testingData, classesTesting, classesTraining, k_distances, k_labels)
     {
 		//per ogni sample del test
-		#pragma omp for schedule(guided, 1)
+		#pragma omp for collapse(2) schedule(guided, 1)
 		//per ogni sample del test
 		for(int i = 0; i < M; i++){
 			//calcolo la distanza euclidea con tutti i punti del train
