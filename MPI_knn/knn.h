@@ -28,22 +28,36 @@ void sort(
 	int K, 
 	int N);
 
+/*
+Funzione per calcolare la distanza euclidea tra gli attributi di un sample di train e uno di test
+Parametri:
+train: sample di train
+test: sample di test
+*/
+float euclideanDistance(
+	float* train, 
+	float* test,
+	int A);
 
 int localKnn(
 	float* trainData, 
 	float* testData, 
 	uint8_t* trainClass, 
 	uint8_t* testClass, 
-	int* testSize, 
+	int testSize, 
 	int* confusionMatrix,
-	int N);
+	int N,
+	int LABELS,
+	int A,
+	int K,
+	int rank);
 
 /*
 
 */
 void knn(
-	char* trainFile,
-	char* testFile,
+	const char* trainFile,
+	const char* testFile,
 	int K, 
 	int N,
 	int M,

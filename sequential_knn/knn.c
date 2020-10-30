@@ -132,7 +132,7 @@ void knn(
 			k_labels[i*M + j] = classesTraining[j];
 		}
 		
-		//ordino i dati in base alle distanze calcolate precedentemente 
+		//ordino i dati del test corrente in base alle distanze calcolate precedentemente 
 		sort(&k_distances[i * M], &k_labels[i * M], K, N);
 		
 		//inizializza a zero il vettore contenente la migliore label per ogni sample di test

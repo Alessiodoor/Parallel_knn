@@ -5,6 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
+#include <stdint.h> 
 #include <cjson/cJSON.h>
 
 /*
@@ -20,7 +21,7 @@ Nfeatures: numero di attributi di ogni sample
 data: array in cui verranno salvati i samples, deve essere allocato precedentemente
 labels: array dove verranno salvate le labels del sample, deve essere allocato precedentemente
 */
-void readFile(const char *path, int lines, int Nfeatures, float* data, int * labels) {
+void readFile(const char *path, int lines, int Nfeatures, float* data, uint8_t * labels) {
 	printf("Lettura  dati %s\n", path);
 	FILE *file = fopen(path, "r");
 	
