@@ -50,7 +50,10 @@ int localKnn(
 	int LABELS,
 	int A,
 	int K,
-	int rank);
+	int rank,
+	float* k_distances, 
+	int* k_labels, 
+	int* countsLabel);
 
 /*
 
