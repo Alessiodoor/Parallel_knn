@@ -57,10 +57,7 @@ int main(int argc, char *argv[])
    }
 
    	// knn implentato in MPI
-   	knn(K, N, M, size, rank);
-
-   	//tutti i processi devono chiudere correttamente MPI
- 	MPI_Finalize();
+   	knn(trainFile, testFile, K, N, M, A, LABELS, size, rank);
 
 	return 0;
 }

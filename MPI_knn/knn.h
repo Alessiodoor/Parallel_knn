@@ -14,6 +14,31 @@ void splitData(
 	int testSize);
 
 /*
+Funzione per ordinare ordinare i sample di train per il test i-esimo in base alla distanza tra train e test
+Questa funzione ordina i vicini di un solo sample di test.
+Parametri:
+distances: array delle distanze tra il sample di test i-esimo e tutti i sample di train
+index: array degli indici di tutti i sample di train per il sample id tst i-esimo
+K: numero di vicini
+N: numero di sample di train
+*/
+void sort(
+	float * distance, 
+	int * index, 
+	int K, 
+	int N);
+
+
+int localKnn(
+	float* trainData, 
+	float* testData, 
+	uint8_t* trainClass, 
+	uint8_t* testClass, 
+	int* testSize, 
+	int* confusionMatrix,
+	int N);
+
+/*
 
 */
 void knn(
@@ -23,7 +48,9 @@ void knn(
 	int N,
 	int M,
 	int A,
+	int LABELS,
 	int size,
 	int rank);
+			
 
 #endif 
