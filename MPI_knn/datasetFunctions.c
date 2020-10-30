@@ -83,6 +83,15 @@ void printConfusionMatrix(int* confusionMatrix, int labels){
 	}
 }
 
+void printData(float * data, uint8_t* labels, int size, int attr){
+	for(int i=0; i< size; i++){
+		for(int j=0; j < attr; j++)
+			printf(" %f ", data[i*attr + j]);
+		printf("Classe %d\n", labels[i] );
+	}
+	printf("\n");
+}
+
 /*
 Salvo su file json i parametri dell'esecuzione e il tempo totale, compreso di tempo di lettura e esecuzioe
 Parametri:

@@ -24,7 +24,7 @@ N: numero di sample di train
 */
 void sort(
 	float * distance, 
-	int * index, 
+	uint8_t * index, 
 	int K, 
 	int N);
 
@@ -50,10 +50,7 @@ int localKnn(
 	int LABELS,
 	int A,
 	int K,
-	int rank,
-	float* k_distances, 
-	int* k_labels, 
-	int* countsLabel);
+	int rank);
 
 /*
 

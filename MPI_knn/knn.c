@@ -60,7 +60,7 @@ index: array degli indici di tutti i sample di train per il sample id tst i-esim
 K: numero di vicini
 N: numero di sample di train
 */
-void sort(float * distance, int * index, int K, int N){
+void sort(float * distance, uint8_t * index, int K, int N){
     index[0] = 0;
     for(int i =1; i < N; ++i){
         float distanzaCorrente = distance[i];
@@ -79,7 +79,7 @@ void sort(float * distance, int * index, int K, int N){
             index[j] = index[j - 1];
             --j;
         }
-
+        
         distance[j] = distanzaCorrente;
         index[j] = indiceCorrente;
     }
@@ -104,8 +104,25 @@ float euclideanDistance(float* train, float* test, int A){
 /*
 
 */
-int localKnn(float* trainData, float* testData, uint8_t* trainClass, uint8_t* testClass, int testSize, int* confusionMatrix, int N, int LABELS, int A, int K, int rank, float* k_distances, int* k_labels, int* countsLabel){
+int localKnn(float* trainData, float* testData, uint8_t* trainClass, uint8_t* testClass, int testSize, int* confusionMatrix, int N, int LABELS, int A, int K, int rank){
 	printf("Start local knn on process %d\n", rank);
+
+	//distanza da ogni punto del training (dopo ordinamento i primi k saranno i vicini) per il sample di test attuale
+	// ad ogni iterazione del for pricnipale verrà riassegnato
+   	float* k_distances = (float*) malloc(N * sizeof(float)); 
+    
+   	//indice della label del sample di train (dopo ordinamento i primi k saranno le etichette dei K vicini), per il sample di test attuale
+   	// riassegnato ad ogni iterazione del for principale 
+   	uint8_t* k_labels = (uint8_t*) malloc(N * sizeof(uint8_t));
+
+   	//label di ogni sample per majority voting
+   	int* countsLabel = (int*) malloc(sizeof(int) * LABELS);
+
+   	//controllo la memoria allocata
+   	if ( k_distances == NULL || k_labels == NULL || countsLabel == NULL ){
+      	printf("Memoria insufficiente\n");
+      	exit(EXIT_FAILURE);
+   	}
 
    	// inizializzo la matrice di confusione con tutti 0
    	for(int i = 0; i < (LABELS * LABELS); i++){
@@ -165,6 +182,8 @@ int localKnn(float* trainData, float* testData, uint8_t* trainClass, uint8_t* te
 	free(countsLabel); countsLabel = NULL;
    	free(k_distances); k_distances = NULL;
    	free(k_labels); k_labels = NULL;
+	
+	printf("Memoria liberata\n");
 
    	return error;
 }			
@@ -231,7 +250,7 @@ void knn(
 
 		// Invio la porzione di test ad ogni processo, per quanto riguarda gli attributi e le classi
    		MPI_Scatterv(testData, countsAttr, addressesAttr, MPI_FLOAT, localTestData, countsAttr[rank_root], MPI_FLOAT, rank_root, MPI_COMM_WORLD);
-   		MPI_Scatterv(testClass, countsClasses, addressesClasses, MPI_UINT8_T, localTestClass, countsClasses[rank_root], MPI_INT, rank_root, MPI_COMM_WORLD);
+   		MPI_Scatterv(testClass, countsClasses, addressesClasses, MPI_UINT8_T, localTestClass, countsClasses[rank_root], MPI_UINT8_T, rank_root, MPI_COMM_WORLD);
 
    		// creo la matrice di confusione locale del processo
    		int* confusionMatrixLocal = (int*) malloc(sizeof(int)* LABELS * LABELS);
@@ -241,39 +260,30 @@ void knn(
 			exit(EXIT_FAILURE);
 		}
 
-		//distanza da ogni punto del training (dopo ordinamento i primi k saranno i vicini) per il sample di test attuale
-		// ad ogni iterazione del for pricnipale verrà riassegnato
-	   	float* k_distances = (float*) malloc(N * sizeof(float)); 
-	    
-	   	//indice della label del sample di train (dopo ordinamento i primi k saranno le etichette dei K vicini), per il sample di test attuale
-	   	// riassegnato ad ogni iterazione del for principale 
-	   	int* k_labels = (int*) malloc(N * sizeof(int));
-
-	   	//label di ogni sample per majority voting
-	   	int* countsLabel = (int*) malloc(sizeof(int) * LABELS);
-
-	   	//controllo la memoria allocata
-	   	if ( k_distances == NULL || k_labels == NULL || countsLabel == NULL ){
-	      	printf("Memoria insufficiente\n");
-	      	exit(EXIT_FAILURE);
-	   	}
-
 		printf("Allocazione completata sul processo %d\n", rank);
 
 		// calcolo knn locale, ovvero solo per la porzione di test assegnata al processo corrente
-		int localError = localKnn(trainData, localTestData, trainClass, localTestClass, countsAttr[rank] / A, confusionMatrixLocal, N, LABELS, A, K, rank, k_distances, k_labels, countsLabel);
+		int localError = localKnn(trainData, localTestData, trainClass, localTestClass, countsAttr[rank] / A, confusionMatrixLocal, N, LABELS, A, K, rank);
+			
+		MPI_Barrier(MPI_COMM_WORLD);
 
 		// alloco la matrice di confusione totale
-		int* confusionMatrix = (int*) malloc(sizeof(int)* LABELS * LABELS);
+		int* confusionMatrixTotal = (int*) malloc(sizeof(int)* LABELS * LABELS);
+		for(int i = 0; i < (LABELS * LABELS); i++){
+	      	confusionMatrixTotal[i] = 0;
+	   	}
 
 		// eseguo una riduzione per construire la matrice di confusione totale unendo le matrici ottenute dall'esecuzione di ogni processo
-		MPI_Reduce(confusionMatrixLocal, confusionMatrix, LABELS*LABELS, MPI_INT, MPI_SUM, rank_root, MPI_COMM_WORLD);
-
-		printConfusionMatrix(confusionMatrix, LABELS);
+		MPI_Reduce(confusionMatrixLocal, confusionMatrixTotal, LABELS*LABELS, MPI_INT, MPI_SUM, rank_root, MPI_COMM_WORLD);
 		
 		// ottengo gli errori sommando quelli di ogni processo
 		int errors = 0;
 		MPI_Reduce(&localError, &errors, 1 , MPI_INT, MPI_SUM, rank_root, MPI_COMM_WORLD);
+
+		//MPI_Barrier(MPI_COMM_WORLD);
+
+		
+		printf("Reduce root\n");
 
 		// dealloco memoria utilizzata
 		free(trainData); trainData = NULL;
@@ -283,9 +293,11 @@ void knn(
 		free(localTestData); localTestData = NULL;
 		free(localTestClass); localTestClass = NULL;
 		free(confusionMatrixLocal); confusionMatrixLocal = NULL;
-		free(confusionMatrix); confusionMatrix = NULL;
+		free(confusionMatrixTotal); confusionMatrixTotal = NULL;
 
 		writeResultJson(K, N, M, A, 0, "resultMPI.json");
+
+		printf("Fine Root\n");
 
    	}else {
    		// operazioni per i processi non root
@@ -311,23 +323,6 @@ void knn(
 			exit(EXIT_FAILURE);
 		}
 
-		//distanza da ogni punto del training (dopo ordinamento i primi k saranno i vicini) per il sample di test attuale
-		// ad ogni iterazione del for pricnipale verrà riassegnato
-	   	float* k_distances = (float*) malloc(N * sizeof(float)); 
-	    
-	   	//indice della label del sample di train (dopo ordinamento i primi k saranno le etichette dei K vicini), per il sample di test attuale
-	   	// riassegnato ad ogni iterazione del for principale 
-	   	int* k_labels = (int*) malloc(N * sizeof(int));
-
-	   	//label di ogni sample per majority voting
-	   	int* countsLabel = (int*) malloc(sizeof(int) * LABELS);
-
-	   	//controllo la memoria allocata
-	   	if ( k_distances == NULL || k_labels == NULL || countsLabel == NULL ){
-	      	printf("Memoria insufficiente\n");
-	      	exit(EXIT_FAILURE);
-	   	}
-
 		printf("Allocazione completata sul processo %d\n", rank);
 
 		// ricevo il train set dal processo root
@@ -339,13 +334,18 @@ void knn(
 		MPI_Scatterv(NULL, NULL, NULL, NULL, localTestClass, countsClasses[rank], MPI_UINT8_T, rank_root, MPI_COMM_WORLD);	
 
 		// eseguo l'algoritmo knn solo per la porzione di test assegnata al processo
-		int localError = localKnn(trainData, localTestData, trainClass, localTestClass, countsAttr[rank] / A, confusionMatrixLocal, N, LABELS, A, K, rank, k_distances, k_labels, countsLabel);
-		
+		int localError = localKnn(trainData, localTestData, trainClass, localTestClass, countsAttr[rank] / A, confusionMatrixLocal, N, LABELS, A, K, rank);
+
+		MPI_Barrier(MPI_COMM_WORLD);
+
 		// inivio al proesso root la porzione calcolata localmente della matrice di confusione, che verrà poi unita con le altre
 		MPI_Reduce(confusionMatrixLocal, NULL, LABELS*LABELS, MPI_INT, MPI_SUM, rank_root, MPI_COMM_WORLD);
 
 		// invio il valore locale degli errori che verrà sommato a quello calcolato da ogni processo
 		MPI_Reduce(&localError, NULL, 1 , MPI_INT, MPI_SUM, rank_root, MPI_COMM_WORLD);
+
+		//MPI_Barrier(MPI_COMM_WORLD);
+		printf("Reduce\n");
 
 		// libero la memoria utilizzata
  		free(trainData); trainData = NULL;
@@ -353,6 +353,8 @@ void knn(
 	    free(localTestData); localTestData = NULL;
 		free(localTestClass); localTestClass = NULL;
 		free(confusionMatrixLocal); confusionMatrixLocal = NULL;
+
+		printf("Fine %d\n", rank);
    	}
 
    	// termino MPI 

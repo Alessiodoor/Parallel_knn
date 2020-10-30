@@ -35,6 +35,8 @@ void printConfusionMatrix(
 	int* confusionMatrix, 
 	int labels);
 
+void printData(float * data, uint8_t* labels, int size, int attr);
+
 /*
 Salvo su file i parametri dell'esecuzione e il tempo totale, compreso di tempo di lettura e esecuzioe
 Parametri:
