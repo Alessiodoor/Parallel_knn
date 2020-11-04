@@ -1,15 +1,38 @@
 #ifndef UTILITY_FUNCTIONS_H 
 #define UTILITY_FUNCTIONS_H
 #include <stdint.h>
+
+/*
+Funzione per leggere i dati di train e test da file
+Parametri:
+path: percorso del file
+lines: numero di righe/sample 
+Nfeatures: numero di attributi di ogni sample
+data: array in cui verranno salvati i samples, deve essere allocato precedentemente
+labels: array dove verranno salvate le labels del sample, deve essere allocato precedentemente
+*/
 void read_file(const char *filename, int lines, int Nfeatures, float* data, uint8_t * labels);
 
-// salva il risultato su file 
-int saveResultsOnFile(float time, int size);
+/*
+Salvo su file i parametri dell'esecuzione e il tempo totale, compreso di tempo di lettura e esecuzioe
+Parametri:
+K: numero di vicini
+trainSize: numero di sample di train
+testSize: numero di sample di test
+attributes: numero di attributi per sample
+totalTime: tempo d'esecuzione che si vuole salvare
+fileName: nome del file di destinazione
+*/
+int saveResultsOnFile(float time, int size, int K, int N, int M);
 
-//void initilizeDistances(struct distAndLabel* distances);
+void printData(float * data, uint8_t* labels, int size, int M);
 
-void printData(float * data, uint8_t* labels, int size);
-
-void printConfusionMatrix(int* confusionMatrix);
+/*
+Funzione per stampare a video la matrice di confuzione ottenuta dall'esecuzione dell'algoritmo Knn
+Parametri:
+confusionMatrix: matrice di confuzione ottenuta dall'esecuzione
+labels: numero di labels contenute della matrice 
+*/
+void printConfusionMatrix(int* confusionMatrix, int LABELS);
 
 #endif

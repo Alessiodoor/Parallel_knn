@@ -28,3 +28,7 @@ Test with 3 process K = 5 trainingData 64 x 30 and testingData: 16 x 30 , time: 
 
 Test with 3 process K = 5 trainingData 64 x 30 and testingData: 16 x 30 , time: 0.027928
 
+Test with 2 process K = 5 trainingData 64 and testingData: 16 , time: 0.028460
+
+Test with 2 process K = 5 trainingData 64 and testingData: 16 , time: 0.055871
+
