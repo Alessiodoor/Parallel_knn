@@ -53,6 +53,9 @@ void writeResult(
 	float totalTime,
 	char *fileName);
 
+/*
+Analoga alla funzione precedente ma salva i risultati vengono salvati su un filejson
+*/
 void writeResultJson(
 	int k, 
 	int trainSize, 

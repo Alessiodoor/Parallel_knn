@@ -107,7 +107,9 @@ void writeResult(int k, int trainSize, int testSize, int attributes, float total
 	fclose(fptr);
 }
 
-
+/*
+Analoga alla funzione precedente ma salva i risultati su un file json
+*/
 void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 

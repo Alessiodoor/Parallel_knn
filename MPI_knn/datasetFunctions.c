@@ -5,6 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
+#include <cjson/cJSON.h>
 
 /*
 Funzione per leggere i dati di train e test da file
@@ -65,14 +66,33 @@ int saveResultsOnFile(float time, int size, int K, int N, int M){
 	return 0;
 }
 
+/*
+Analoga alla funzione precedente ma salva i risultati su un file json
+*/
+void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
+	cJSON *result = cJSON_CreateObject();
 
-void printData(float * data, uint8_t* labels, int size, int M){
-	for(int i=0; i< size; i++){
-		for(int j=0; j <M; j++)
-			printf(" %f ", data[i*M +j]);
-		printf("Classe %d\n", labels[i] );
-	}
-	printf("\n");
+	cJSON_AddNumberToObject(result, "K", k);
+    cJSON_AddNumberToObject(result, "trainSize", trainSize);
+    cJSON_AddNumberToObject(result, "testSize", testSize);
+    cJSON_AddNumberToObject(result, "attributes", attributes);
+    cJSON_AddNumberToObject(result, "totalTime", totalTime);
+
+    const char* const stringResult = cJSON_Print(result);
+
+	FILE *fptr;
+	fptr = fopen(fileName, "w");
+
+	if(fptr == NULL)  {
+      	printf("Errore scrittuta file");   
+      	exit(1);             
+   	}
+
+   	fprintf(fptr, "%s", stringResult);
+
+	fclose(fptr);
+
+	cJSON_Delete(result);
 }
 
 /*
