@@ -13,7 +13,7 @@
 // labels
 #define LABELS 10
 // numtreads
-#define NT 32
+//#define NT 32
 
 int main(int argc, char *argv[])
 {
@@ -27,14 +27,15 @@ int main(int argc, char *argv[])
    // N: numero di sample di train
    // M: numero di sample di test
    // k: numero di vicini
-   if(argc != 6){
+   if(argc != 7){
       printf(
          "Errore non sono stati specificati correttamente i parametri:\n"
          "1 - Train fileName\n"
          "2 - Test tileName\n"
          "3 - Numero sample di train\n"
          "4 - Numero sample di test\n"
-         "5 - K: numero di vicini");
+         "5 - K: numero di vicini\n"
+         "6 - NT: numero di treads");
       exit(EXIT_FAILURE);
    }
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[])
    int N = atoi(argv[3]);
    int M = atoi(argv[4]);
    int K = atoi(argv[5]);
+   int NT = atoi(argv[6]);
 
    if (K > N){
       printf("Errore il numero di vicini non può essere superiore al numero di sample!\n");
@@ -80,7 +82,7 @@ int main(int argc, char *argv[])
    	free(classesTesting); classesTesting = NULL;
 
    	executionTime = omp_get_wtime() - start;
-   	writeResultJson(K, N, M, A, executionTime, "resultsOpenMP.json");
+   	writeResultJson(K, N, M, A, executionTime, NT, "resultsOpenMP.json");
 
 	return 0;
 }

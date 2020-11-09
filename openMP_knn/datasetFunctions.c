@@ -22,7 +22,7 @@ data: array in cui verranno salvati i samples, deve essere allocato precedenteme
 labels: array dove verranno salvate le labels del sample, deve essere allocato precedentemente
 */
 void readFile(const char *path, int lines, int Nfeatures, float* data, uint8_t* labels) {
-	printf("Lettura  dati %s\n", path);
+	//printf("Lettura  dati %s\n", path);
 	FILE *file = fopen(path, "r");
 	
 	if (file == NULL){
@@ -40,7 +40,7 @@ void readFile(const char *path, int lines, int Nfeatures, float* data, uint8_t* 
 	  	}
 	}
 
-	printf("Lettura completata.\n");
+	//printf("Lettura completata.\n");
 }
 
 void readArguments(const cJSON* arguments, const char* path) {
@@ -110,7 +110,7 @@ void writeResult(int k, int trainSize, int testSize, int attributes, float total
 /*
 Analoga alla funzione precedente ma salva i risultati su un file json
 */
-void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
+void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, int size, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 
 	cJSON_AddNumberToObject(result, "K", k);
@@ -118,18 +118,19 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
     cJSON_AddNumberToObject(result, "testSize", testSize);
     cJSON_AddNumberToObject(result, "attributes", attributes);
     cJSON_AddNumberToObject(result, "totalTime", totalTime);
+    cJSON_AddNumberToObject(result, "numberTreads", size);
 
     const char* const stringResult = cJSON_Print(result);
 
 	FILE *fptr;
-	fptr = fopen(fileName, "w");
+	fptr = fopen(fileName, "a");
 
 	if(fptr == NULL)  {
       	printf("Errore scrittuta file");   
       	exit(1);             
    	}
 
-   	fprintf(fptr, "%s", stringResult);
+   	fprintf(fptr, "%s,", stringResult);
 
 	fclose(fptr);
 

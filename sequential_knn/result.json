@@ -4,4 +4,16 @@
 	"testSize":	8000,
 	"attributes":	30,
 	"totalTime":	31.744951248168945
-}
+}{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.000988999963738024
+},{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.00092199997743591666
+},

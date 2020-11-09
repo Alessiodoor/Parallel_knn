@@ -25,7 +25,7 @@ for j in tqdm(range(len(NP))):
 		#for x in range(10):
 			#subprocess.check_output(["make", "clean"])
 		#subprocess.check_output(["make"])
-		command = "mpirun -np {} ./main.exe {} {} {} {} {}".format(NP[j], trainFile, testFile, N[i], M[i], K)
+		command = "./main.exe {} {} {} {} {} {}".format(trainFile, testFile, N[i], M[i], K, NP[j])
 		#print(command)
 		#subprocess.check_output(["make clean"])
 		subprocess.call(command, shell= True)

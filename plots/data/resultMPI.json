@@ -1,4 +1,4 @@
-{
+[{
 	"K":	5,
 	"trainSize":	64,
 	"testSize":	16,
@@ -33,4 +33,4 @@
 	"attributes":	30,
 	"totalTime":	0.90469717979431152,
 	"NP":	32
-},
+}]

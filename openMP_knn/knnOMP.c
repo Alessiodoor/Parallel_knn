@@ -115,7 +115,7 @@ void knn(
       	confusionMatrix[i] = 0;
    	}
 
-   	printf("Knn start...\n");
+   	//printf("Knn start...\n");
 	//numero di errori compessi dall'algoritmo KNN
    	int error = 0;
 
@@ -183,7 +183,7 @@ void knn(
 		confusionMatrix[realLabel * LABELS + bestLabel] = confusionMatrix[realLabel * LABELS + bestLabel] + 1;	
 	}
 
-	printConfusionMatrix(confusionMatrix, LABELS);
+	//printConfusionMatrix(confusionMatrix, LABELS);
 
 	// libero la memoria utilizzata 
    	free(confusionMatrix); confusionMatrix = NULL;

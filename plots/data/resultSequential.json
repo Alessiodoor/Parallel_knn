@@ -1,0 +1,7 @@
+{
+	"K":	5,
+	"trainSize":	32000,
+	"testSize":	8000,
+	"attributes":	30,
+	"totalTime":	31.744951248168945
+}

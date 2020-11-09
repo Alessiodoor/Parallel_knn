@@ -1,7 +1,36 @@
 {
 	"K":	5,
-	"trainSize":	32000,
-	"testSize":	8000,
+	"trainSize":	64,
+	"testSize":	16,
 	"attributes":	30,
-	"totalTime":	37.7090950012207
+	"totalTime":	0.00104794604703784,
+	"numberTreads":	2
+},{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.0010559839429333806,
+	"numberTreads":	4
+},{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.0007851719856262207,
+	"numberTreads":	8
+},{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.000889746006578207,
+	"numberTreads":	16
+},{
+	"K":	5,
+	"trainSize":	64,
+	"testSize":	16,
+	"attributes":	30,
+	"totalTime":	0.00096379301976412535,
+	"numberTreads":	32
 }

@@ -62,6 +62,7 @@ void writeResultJson(
 	int testSize, 
 	int attributes, 
 	float totalTime,
+	int size,
 	char *fileName);
 
 #endif

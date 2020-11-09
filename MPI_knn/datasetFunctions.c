@@ -69,7 +69,7 @@ int saveResultsOnFile(float time, int size, int K, int N, int M){
 /*
 Analoga alla funzione precedente ma salva i risultati su un file json
 */
-void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
+void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, int size, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 
 	cJSON_AddNumberToObject(result, "K", k);
@@ -77,18 +77,19 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
     cJSON_AddNumberToObject(result, "testSize", testSize);
     cJSON_AddNumberToObject(result, "attributes", attributes);
     cJSON_AddNumberToObject(result, "totalTime", totalTime);
+    cJSON_AddNumberToObject(result, "NP", size);
 
     const char* const stringResult = cJSON_Print(result);
 
 	FILE *fptr;
-	fptr = fopen(fileName, "w");
+	fptr = fopen(fileName, "a");
 
 	if(fptr == NULL)  {
       	printf("Errore scrittuta file");   
       	exit(1);             
    	}
 
-   	fprintf(fptr, "%s", stringResult);
+   	fprintf(fptr, "%s,", stringResult);
 
 	fclose(fptr);
 

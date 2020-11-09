@@ -119,14 +119,14 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
     const char* const stringResult = cJSON_Print(result);
 
 	FILE *fptr;
-	fptr = fopen(fileName, "w");
+	fptr = fopen(fileName, "a");
 
 	if(fptr == NULL)  {
       	printf("Errore scrittuta file");   
       	exit(1);             
    	}
 
-   	fprintf(fptr, "%s", stringResult);
+   	fprintf(fptr, "%s,", stringResult);
 
 	fclose(fptr);
 
