@@ -1,19 +1,13 @@
 {
 	"K":	5,
-	"trainSize":	32000,
-	"testSize":	8000,
+	"trainSize":	64,
+	"testSize":	16,
 	"attributes":	30,
-	"totalTime":	31.744951248168945
+	"totalTime":	0.0010270000202581286
 }{
 	"K":	5,
 	"trainSize":	64,
 	"testSize":	16,
 	"attributes":	30,
-	"totalTime":	0.000988999963738024
-},{
-	"K":	5,
-	"trainSize":	64,
-	"testSize":	16,
-	"attributes":	30,
-	"totalTime":	0.00092199997743591666
+	"totalTime":	0.00083799997810274363
 },
