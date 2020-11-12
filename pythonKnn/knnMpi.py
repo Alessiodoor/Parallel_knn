@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics import accuracy_score
 import sys
+import json
+import os
 
 class KNN:
 
@@ -87,11 +89,32 @@ def allocData(path, nAttr):
 
 #----------- KNN --------------
 
+def saveResults(K, trainSize, testSize, A, np, elapsedTime, fileName = 'resultsMpiPy.json'):
+    if os.path.isfile(fileName):
+        with open(fileName) as f:
+            data = json.load(f)
+    else:
+        data = []
+    result = {}
+
+    result['K'] = K
+    result['trainSize'] = trainSize
+    result['testSize'] = testSize
+    result['attributes'] = A
+    result['totalTime'] = elapsedTime
+    result['NP'] = np
+
+    data.append(result)
+
+    with open(fileName, 'w') as outfile:
+        json.dump(data, outfile)
+
 def parallel_KNN(k, X_train, y_train, X_test, y_test):
     # MPI handling
     from mpi4py import MPI
     comm = MPI.COMM_WORLD
     num_processes = comm.Get_size()
+
     rank = comm.Get_rank()
 
     tag_local_result = 1000
@@ -139,11 +162,14 @@ def parallel_KNN(k, X_train, y_train, X_test, y_test):
 
         end = MPI.Wtime()
         elapsed_time = end - start
-        #if num_processes == 1:
-            #print('Serial Elapsed time = ' + str(elapsed_time))
-        #else:
-            #print('Parallel Elapsed time = ' + str(elapsed_time))
-        return elapsed_time
+
+        if num_processes == 1:
+            print('Serial Elapsed time = ' + str(elapsed_time))
+        else:
+            print('Parallel Elapsed time = ' + str(elapsed_time))
+
+        saveResults(k, x_train.shape[0], y_train.shape[0], A, num_processes, elapsed_time)
+        #return elapsed_time
 
     # Slave processes
     else:
@@ -161,9 +187,12 @@ def parallel_KNN(k, X_train, y_train, X_test, y_test):
 
 
 #----------- Main -------------
+# numero di attributi
 A = 30
+# numero di vicini
 k = 5
 
+#controllo i parametri da riga di comando
 if len(sys.argv) == 3:
 	trainPath = sys.argv[1]
 	testPath = sys.argv[2]
@@ -171,8 +200,9 @@ else:
 	print("Paremetri sbagliati")
 	sys.exit()
 
+# costruisco il dataset
 x_train, y_train = allocData(trainPath, A)
 x_test, y_test = allocData(testPath, A)
 
-executionTime = parallel_KNN(k, x_train, y_train, x_test, y_test)
-print(executionTime)
+# eseguo l'algoritmo knn
+parallel_KNN(k, x_train, y_train, x_test, y_test)
