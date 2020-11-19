@@ -1,2 +1,2 @@
 # Parallel_knn
-Parallel implementation of Ann in c
+Parallel implementation of knn in c
