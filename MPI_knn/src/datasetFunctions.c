@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 Funzione per leggere i dati di train e test da file
@@ -70,6 +70,7 @@ int saveResultsOnFile(float time, int size, int K, int N, int M){
 Analoga alla funzione precedente ma salva i risultati su un file json
 */
 void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, int size, char *fileName){
+	/*
 	cJSON *result = cJSON_CreateObject();
 
 	cJSON_AddNumberToObject(result, "K", k);
@@ -94,6 +95,14 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
 	fclose(fptr);
 
 	cJSON_Delete(result);
+	*/
+
+	printf("K %d\n", K);
+	printf("trainSize %d\n", trainSize);
+	printf("testSize %d\n", testSize);
+	printf("attributes %d\n", attributes);
+	printf("totalTime %d\n", totalTime);
+	printf("NP %d\n", NP);
 }
 
 /*
