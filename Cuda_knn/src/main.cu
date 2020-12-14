@@ -16,7 +16,7 @@
 #define LABELS 10
 // numtreads
 #define NT 32
-#define BLOCK_SIZE 32
+//#define BLOCK_SIZE 32
 
 int main(int argc, char *argv[])
 {
@@ -27,14 +27,15 @@ int main(int argc, char *argv[])
    	// N: numero di sample di train
    	// M: numero di sample di test
    	// k: numero di vicini
-   	if(argc != 6){
+   	if(argc != 7){
       	printf(
         	 "Errore non sono stati specificati correttamente i parametri:\n"
          	"1 - Train fileName\n"
          	"2 - Test tileName\n"
          	"3 - Numero sample di train\n"
          	"4 - Numero sample di test\n"
-         	"5 - K: numero di vicini");
+         	"5 - K: numero di vicini\n"
+         	"6 - BLOCK_SIZE: numero di blocchi per grid");
       	exit(EXIT_FAILURE);
    	}
 
@@ -44,6 +45,7 @@ int main(int argc, char *argv[])
    	int N = atoi(argv[3]);
    	int M = atoi(argv[4]);
    	int K = atoi(argv[5]);
+   	int BLOCK_SIZE = atoi(argv[6])
 
    	if (K > N){
       	printf("Errore il numero di vicini non può essere superiore al numero di sample!\n");

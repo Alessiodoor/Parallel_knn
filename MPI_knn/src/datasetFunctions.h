@@ -28,12 +28,14 @@ attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
 fileName: nome del file di destinazione
 */
-int writeResult(
-	float time, 
-	int size, 
-	int K, 
-	int N, 
-	int M);
+int saveResultsOnFile(
+	int k, 
+	int trainSize, 
+	int testSize, 
+	int attributes, 
+	float totalTime,
+	int size,
+	char *fileName);
 
 /*
 Analoga alla funzione precedente ma salva i risultati vengono salvati su un filejson

@@ -1,5 +1,5 @@
 main.exe: main.o knnMPI.o datasetFunctions.o 
-	mpicc -std=c99 -o main.exe knnMPI.o main.o datasetFunctions.o -lm -I/usr/local/include -L/usr/local/lib -Wl,-rpath=/usr/local/lib -l cjson
+	mpicc -std=c99 -o main.exe knnMPI.o main.o datasetFunctions.o -lm 
 
 main.o: main.c input.h 
 	mpicc -std=c99 -c main.c -o main.o -lm
@@ -15,3 +15,5 @@ datasetFunctions.o: datasetFunctions.c datasetFunctions.h input.h
 clean:
 	rm -f *.o main.exe
 
+
+#-I/usr/local/include -L/usr/local/lib -Wl,-rpath=/usr/local/lib -l cjson

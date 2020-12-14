@@ -357,7 +357,7 @@ void knn(
         MPI_Reduce(&localError, &errors, 1 , MPI_INT, MPI_SUM, root_rank, MPI_COMM_WORLD);
 
         //MPI_Barrier(MPI_COMM_WORLD);
-        //printConfusionMatrix(confusionMatrix, LABELS);
+        printConfusionMatrix(confusionMatrix, LABELS);
 
         // libero la memoria 
         free(trainData); trainData = NULL;
@@ -376,7 +376,8 @@ void knn(
         double elapsed_time = final_time - time_init;
          
         // salvo i risultati su un file json
-        writeResultJson(K, N, M, A, elapsed_time, size, "result_MPI.json");
+        //writeResultJson(K, N, M, A, elapsed_time, size, "result_MPI.json");
+        saveResultsOnFile(K, N, M, A, elapsed_time, size, "result_MPI.json");
     }
         
     // operazioni del processo non root
