@@ -1,7 +1,7 @@
 #ifndef UTILITY_FUNCTIONS_H 
 #define UTILITY_FUNCTIONS_H
 #include <stdint.h>
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 Funzione per leggere i dati di train e test da file
@@ -17,13 +17,13 @@ void readFile(
 	int lines, 
 	int Nfeatures, 
 	float* data, 
-	uint8_t* labels);
+	int* labels);
 
-
+/*
 void readArguments(
 	const cJSON* arguments,
 	const char* path);
-
+*/
 /*
 Funzione per stampare a video la matrice di confuzione ottenuta dall'esecuzione dell'algoritmo Knn
 Parametri:
@@ -44,13 +44,13 @@ attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
 fileName: nome del file di destinazione
 */
-void writeResult(
+int saveResultsOnFile(
 	int k, 
 	int trainSize, 
 	int testSize, 
 	int attributes, 
 	float totalTime,
-	char *fileName);
+	int size);
 
 /*
 Analoga alla funzione precedente ma salva i risultati vengono salvati su un filejson

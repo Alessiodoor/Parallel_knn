@@ -6,7 +6,7 @@
 #include <math.h>
 #include <limits.h>
 #include <stdint.h> 
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 In questo file sono presenti tutte le funzioni utili per interagire con i dati di train e test
@@ -21,7 +21,7 @@ Nfeatures: numero di attributi di ogni sample
 data: array in cui verranno salvati i samples, deve essere allocato precedentemente
 labels: array dove verranno salvate le labels del sample, deve essere allocato precedentemente
 */
-void readFile(const char *path, int lines, int Nfeatures, float* data, uint8_t* labels) {
+void readFile(const char *path, int lines, int Nfeatures, float* data, int* labels) {
 	printf("Lettura  dati %s\n", path);
 	FILE *file = fopen(path, "r");
 	
@@ -68,18 +68,26 @@ attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
 fileName: nome del file di destinazione
 */
-void writeResult(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
-	FILE *fptr;
-	fptr = fopen(fileName, "w");
+int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float totalTime, int size){
+	FILE *fp;
 
-	if(fptr == NULL)  {
-      	printf("Errore scrittuta file");   
-      	exit(1);             
-   	}
+	int i, j;
+	char * wheretoprint = "resultCuda.json";
+	fp = fopen(wheretoprint,"a");
 
-   	fprintf(fptr, "Test with K = %d trainingData %d and testingData: %d, time: %f\n\n", k, trainSize, testSize, totalTime);
+	if (fp == NULL) {
+	    printf("\nCannot write on %s\n", wheretoprint);
+	    return -1;
+	}
 
-	fclose(fptr);
+	//fprintf(fp, "Test with %d process K = %d trainingData %d and testingData: %d , time: %f\n\n",size, K, N, M, time);
+	fprintf(fp, 
+		"K %d\n trainSize %d\n trainSize %d\n attributes %d\n totalTime %f\n NP %d\n", 
+		k, trainSize, testSize, attributes, totalTime, size
+	);
+	fclose(fp);
+
+	return 0;
 }
 
 /*

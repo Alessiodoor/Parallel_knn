@@ -94,11 +94,11 @@ attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
 fileName: nome del file di destinazione
 */
-int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float totalTime, int size, char *fileName){
+int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float totalTime, int size){
 	FILE *fp;
 
 	int i, j;
-	char * wheretoprint = "resultsKNN_mpi.out";
+	char * wheretoprint = "resultsKNN_openMP.out";
 	fp = fopen(wheretoprint,"a");
 
 	if (fp == NULL) {

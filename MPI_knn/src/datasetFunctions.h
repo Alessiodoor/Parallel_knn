@@ -34,8 +34,7 @@ int saveResultsOnFile(
 	int testSize, 
 	int attributes, 
 	float totalTime,
-	int size,
-	char *fileName);
+	int size);
 
 /*
 Analoga alla funzione precedente ma salva i risultati vengono salvati su un filejson

@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
    	int N = atoi(argv[3]);
    	int M = atoi(argv[4]);
    	int K = atoi(argv[5]);
-   	int BLOCK_SIZE = atoi(argv[6])
+   	int BLOCK_SIZE = atoi(argv[6]);
 
    	if (K > N){
       	printf("Errore il numero di vicini non può essere superiore al numero di sample!\n");
@@ -138,6 +138,7 @@ int main(int argc, char *argv[])
 	HANDLE_ERROR( cudaEventRecord(stopSendData, 0));
 	HANDLE_ERROR( cudaEventSynchronize(stopSendData));
 	
+	float elapsedTimeRead;
 	HANDLE_ERROR( cudaEventElapsedTime(&elapsedTimeRead, start, stopSendData ));
 	
 	// creo blocchi da BLOCK_SIZE * BLOCK_SIZE thread
@@ -147,6 +148,8 @@ int main(int argc, char *argv[])
 	int dim_row = (M + 1 % BLOCK_SIZE == 0) ? M / BLOCK_SIZE : M / BLOCK_SIZE + 1;
 	int dim_col = (N + 1 % BLOCK_SIZE == 0) ? N / BLOCK_SIZE : N / BLOCK_SIZE + 1;
 	
+	dim3 grid(dim_col, dim_row, 1); // a grid of CUDA thread blocks
+
 	// calcola distanza euclidea tra punti train e test
 	euclideanDistance_kernel<<<grid, block>>>(dev_train, dev_test, dev_dist);//, dev_label);
 
@@ -186,7 +189,7 @@ int main(int argc, char *argv[])
 	cudaDeviceSynchronize();
 
 	//recupero risultati dalla GPU
-	HANDLE_ERROR(cudaMemcpy(label , dev_label, P * K * sizeof(int), cudaMemcpyDeviceToHost ) );
+	HANDLE_ERROR(cudaMemcpy(label , dev_label, M * K * sizeof(int), cudaMemcpyDeviceToHost ) );
 	
 	HANDLE_ERROR( cudaEventRecord(  secondoStep, 0 ) );
 	HANDLE_ERROR( cudaEventSynchronize(  secondoStep ) );
@@ -198,7 +201,9 @@ int main(int argc, char *argv[])
 	
 	//il calcolo della matrice di confusione finale viene lasciato alla cpu
 	for (int i = 0; i < M; i++){
-		initilizeArray(countsLabel, LABELS, 0);
+		for(int l = 0; l < LABELS; l++){
+			countsLabel[l] = 0;
+		}
 		int bestLabel = 0;
 		for(int j = 0; j < K; j++){	
 			int indice = label[i*K + j];
@@ -247,7 +252,8 @@ int main(int argc, char *argv[])
 	//HANDLE_ERROR( cudaEventDestroy( stopRead ) );
 
 	// salvo risultati su json
-    writeResultJson(K, N, M, A, elapsedTime/1000, "resultCuda.json");
+	saveResultsOnFile(K, N, M, A, elapsedTime/1000,BLOCK_SIZE);
+    //writeResultJson(K, N, M, A, elapsedTime/1000, "resultCuda.json");
 
 	return 0;
 }
