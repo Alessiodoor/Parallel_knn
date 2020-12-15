@@ -7,7 +7,7 @@
 
 
 //funzione kernel in cui ogni thread computa la distanza tra il proprio sample di test e tutti quelli del train
-__global__ void euclideanDistance_kernel(const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances){//, int* dev_labels){
+__global__ void euclideanDistance_kernel(int N, int M, int A, const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances){//, int* dev_labels){
 	//indice inizio riga
 	
 	int idx = threadIdx.x+blockDim.x*blockIdx.x;
@@ -15,7 +15,7 @@ __global__ void euclideanDistance_kernel(const float* __restrict__ dev_train, co
 	
 	//printf("cx cy %d %d\n", cx, cy);
 	//check extra thread
-	if(idx < N && idy < P){
+	if(idx < N && idy < M){
 		//printf("cx cy %d %d\n", cx, cy);
 		//__shared__ float train[M];
 		//trai
@@ -23,10 +23,10 @@ __global__ void euclideanDistance_kernel(const float* __restrict__ dev_train, co
 		//__syncthreads();
 		float sum = 0.f;
 	    #pragma unroll
-	    for (int d = 0; d < M; ++d) {
+	    for (int d = 0; d < A; ++d) {
 	    	//__ldg(d_a + i)
-	    	float x = dev_train[idx*M +d];  
-	    	float y = dev_test[idy* M +d];
+	    	float x = dev_train[idx*A +d];  
+	    	float y = dev_test[idy*A +d];
 	    	//loat x =__ldg(dev_train + idx*M + d);
 	    	//float y =__ldg(dev_test + idy*M + d);
 	        float diff = x - y;
@@ -39,13 +39,13 @@ __global__ void euclideanDistance_kernel(const float* __restrict__ dev_train, co
 	}
 }
 
-__global__ void sort_kernel(float* __restrict__ dev_distances, int* __restrict__ dev_labels){
+__global__ void sort_kernel(int N, int M, int K, float* __restrict__ dev_distances, int* __restrict__ dev_labels){
 	
 	//indice inizio riga
 	int index = threadIdx.x + blockDim.x * blockIdx.x;
 	//printf(" %d ", index);
 	//check extra thread
-	if(index < P){
+	if(index < M){
 		dev_labels[index * K] = 0;
 		#pragma unroll
 		for(int i=1; i< N; i++){

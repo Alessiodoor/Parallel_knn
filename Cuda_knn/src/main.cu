@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
 	dim3 grid(dim_col, dim_row, 1); // a grid of CUDA thread blocks
 
 	// calcola distanza euclidea tra punti train e test
-	euclideanDistance_kernel<<<grid, block>>>(dev_train, dev_test, dev_dist);//, dev_label);
+	euclideanDistance_kernel<<<grid, block>>>(N, M, A, dev_train, dev_test, dev_dist);//, dev_label);
 
 	int * label = (int*) malloc(M * K *sizeof(int));
 	int* countsLabel = (int*) malloc(sizeof(int)* LABELS);
@@ -184,7 +184,7 @@ int main(int argc, char *argv[])
 	dim3 blockSort(BLOCK_SIZE, 1, 1);
 	dim3 gridSort(dim_row, 1, 1);
 
-	sort_kernel<<<gridSort, blockSort>>>(dev_dist, dev_label);
+	sort_kernel<<<gridSort, blockSort>>>(N, M, K, dev_dist, dev_label);
 
 	cudaDeviceSynchronize();
 

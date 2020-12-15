@@ -55,6 +55,7 @@ int saveResultsOnFile(
 /*
 Analoga alla funzione precedente ma salva i risultati vengono salvati su un filejson
 */
+/*
 void writeResultJson(
 	int k, 
 	int trainSize, 
@@ -62,5 +63,5 @@ void writeResultJson(
 	int attributes, 
 	float totalTime,
 	char *fileName);
-
+*/
 #endif

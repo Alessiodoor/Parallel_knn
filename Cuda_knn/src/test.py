@@ -22,13 +22,13 @@ for j in range(len(BLOCK_SIZE)):
 		trainFile = "../../dataset/train_" + str(N[i])
 		testFile= "../../dataset/test_" + str(M[i])
 
-		print "TEST WITH = ", N[i],
-		print "BLOCK_SIZE = ", BLOCK_SIZE[j]
+		print("TEST WITH = ", N[i])
+		print("BLOCK_SIZE = ", BLOCK_SIZE[j])
 
 		#subprocess.check_output(["make", "clean"])
 		#subprocess.check_output(["make"])
 		command = "./main.exe {} {} {} {} {} {}".format(trainFile, testFile, N[i], M[i], K, BLOCK_SIZE[j])
 		print(command)
 		
-		subprocess.call("./knn_cuda.x train test", shell= True)
+		subprocess.call(command, shell= True)
 

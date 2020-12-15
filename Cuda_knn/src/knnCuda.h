@@ -4,9 +4,9 @@
 
 //__device__ float distanceFunction(float* train, float* test);
 
-__global__ void euclideanDistance_kernel(const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances);//, int* dev_labels);
+__global__ void euclideanDistance_kernel(int N, int M, int A, const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances);//, int* dev_labels);
 
-__global__ void sort_kernel(float* __restrict__ dev_distances, int* __restrict__ dev_labels);
+__global__ void sort_kernel(int N, int M, int K, float* __restrict__ dev_distances, int* __restrict__ dev_labels);
 
 #endif
 

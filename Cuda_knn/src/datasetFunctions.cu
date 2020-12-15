@@ -71,7 +71,6 @@ fileName: nome del file di destinazione
 int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float totalTime, int size){
 	FILE *fp;
 
-	int i, j;
 	char * wheretoprint = "resultCuda.json";
 	fp = fopen(wheretoprint,"a");
 
@@ -93,6 +92,7 @@ int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float 
 /*
 Analoga alla funzione precedente ma salva i risultati su un file json
 */
+/*
 void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 
@@ -118,4 +118,4 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
 
 	cJSON_Delete(result);
 }
-
+*/
