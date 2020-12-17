@@ -1,8 +1,8 @@
 import subprocess 
 from tqdm import tqdm
 
-N = [700]
-M = [300]
+N = [10500]
+M = [4500]
 K = 5
 NP = [2, 4, 8, 16, 32]
 
@@ -10,8 +10,8 @@ NP = [2, 4, 8, 16, 32]
 #lines = ["#ifndef INPUT\n", "#define INPUT\n", "#include <stdlib.h>\n", "#include <stdio.h>\n", "", "", "","", "#define LABELS 10\n", "typedef enum {true, false} bool;\n", "#endif\n"]
 for j in range(len(NP)):
 	for i in range(len(N)):
-		trainFile = "../../dataset/train_" + str(N[0])
-		testFile= "../../dataset/test_" + str(M[0])
+		trainFile = "../../dataset/train_" + str(N[i])
+		testFile= "../../dataset/test_" + str(M[i])
 		'''
 		lines[4] = "#define M {}\n".format(M)
 		lines[5] = "#define N {}\n".format(N[i])

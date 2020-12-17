@@ -377,7 +377,7 @@ void knn(
          
         // salvo i risultati su un file json
         //writeResultJson(K, N, M, A, elapsed_time, size, "result_MPI.json");
-        saveResultsOnFile(K, N, M, A, elapsed_time, size, "result_MPI.json");
+        saveResultsOnFile(K, N, M, A, elapsed_time, size);
     }
         
     // operazioni del processo non root

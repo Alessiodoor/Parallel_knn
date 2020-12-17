@@ -1,11 +1,11 @@
 import subprocess
-N = [64] 
-M = [16]
+
+N = [700, 3500, 7000]
+M = [300, 1500, 3000]
 K = 5
 LABELS = 10
 BLOCK_SIZE = [32]
 
-subprocess.call("rm resultsKNN_cudav2.out", shell= True)
 #lines = ["#ifndef INPUT\n", "#define INPUT\n", "#include <stdlib.h>\n", "#include <stdio.h>\n", "", "", "","", "", "#define LABELS 10\n", "#endif\n"]
 for j in range(len(BLOCK_SIZE)):
 	for i in range(len(N)):

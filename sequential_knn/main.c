@@ -86,8 +86,8 @@ int main(int argc, char const *argv[])
    float totaltime = (float)(clock() - start)/ (float) CLOCKS_PER_SEC;
    //printf("total time: %f \n", totaltime);
 
-   //writeResult(K, N, M, A, totaltime, "result.txt");
-   writeResultJson(K, N, M, A, totaltime, "result.json");
+   saveResultsOnFile(K, N, M, A, totaltime);
+   //writeResultJson(K, N, M, A, totaltime, "result.json");
 
 	return 0;
 }

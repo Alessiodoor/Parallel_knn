@@ -5,7 +5,7 @@
 #include <string.h>
 #include <math.h>
 #include <limits.h>
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 In questo file sono presenti tutte le funzioni utili per interagire con i dati di train e test
@@ -42,6 +42,7 @@ void readFile(const char *path, int lines, int Nfeatures, float* data, int * lab
 	printf("Lettura completata.\n");
 }
 
+/*
 void readArguments(const cJSON* arguments, const char* path) {
 	printf("Lettura argomenti\n");
 
@@ -54,7 +55,7 @@ void readArguments(const cJSON* arguments, const char* path) {
 
 	fseek(f, 0, SEEK_END);
 	long fsize = ftell(f);
-	fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
+	fseek(f, 0, SEEK_SET); 
 
 	char *string = malloc(fsize + 1);
 	fread(string, 1, fsize, f);
@@ -66,7 +67,7 @@ void readArguments(const cJSON* arguments, const char* path) {
 
 	string[fsize] = 0;
 }
-
+*/
 /*
 Funzione per stampare a video la matrice di confuzione ottenuta dall'esecuzione dell'algoritmo Knn
 Parametri:
@@ -90,23 +91,30 @@ trainSize: numero di sample di train
 testSize: numero di sample di test
 attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
-fileName: nome del file di destinazione
 */
-void writeResult(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
-	FILE *fptr;
-	fptr = fopen(fileName, "w");
+int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float totalTime){
+	FILE *fp;
 
-	if(fptr == NULL)  {
-      	printf("Errore scrittuta file");   
-      	exit(1);             
-   	}
+	int i, j;
+	char * wheretoprint = "resultsSequential_openMP.out";
+	fp = fopen(wheretoprint,"a");
 
-   	fprintf(fptr, "Test with K = %d trainingData %d and testingData: %d, time: %f\n\n", k, trainSize, testSize, totalTime);
+	if (fp == NULL) {
+	    printf("\nCannot write on %s\n", wheretoprint);
+	    return -1;
+	}
 
-	fclose(fptr);
+	//fprintf(fp, "Test with %d process K = %d trainingData %d and testingData: %d , time: %f\n\n",size, K, N, M, time);
+	fprintf(fp, 
+		"K %d\n trainSize %d\n trainSize %d\n attributes %d\n totalTime %f\n", 
+		k, trainSize, testSize, attributes, totalTime
+	);
+	fclose(fp);
+
+	return 0;
 }
 
-
+/*
 void writeResultJson(int k, int trainSize, int testSize, int attributes, float totalTime, char *fileName){
 	cJSON *result = cJSON_CreateObject();
 
@@ -132,4 +140,4 @@ void writeResultJson(int k, int trainSize, int testSize, int attributes, float t
 
 	cJSON_Delete(result);
 }
-
+*/

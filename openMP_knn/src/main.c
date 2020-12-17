@@ -82,7 +82,7 @@ int main(int argc, char *argv[])
    	free(classesTesting); classesTesting = NULL;
 
    	executionTime = omp_get_wtime() - start;
-      saveResultsOnFile(K, N, M, A, executionTime, NT, "resultsOpenMP.json");
+      saveResultsOnFile(K, N, M, A, executionTime, NT);
    	//writeResultJson(K, N, M, A, executionTime, NT, "resultsOpenMP.json");
 
 	return 0;

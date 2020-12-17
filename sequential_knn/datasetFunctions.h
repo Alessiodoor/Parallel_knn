@@ -1,7 +1,7 @@
 #ifndef DATASETFUNCTIONS_H
 #define DATASETFUNCTIONS_H 
 
-#include <cjson/cJSON.h>
+//#include <cjson/cJSON.h>
 
 /*
 Funzione per leggere i dati di train e test da file
@@ -19,11 +19,11 @@ void readFile(
 	float* data, 
 	int * labels);
 
-
+/*
 void readArguments(
 	const cJSON* arguments,
 	const char* path);
-
+*/
 /*
 Funzione per stampare a video la matrice di confuzione ottenuta dall'esecuzione dell'algoritmo Knn
 Parametri:
@@ -42,16 +42,15 @@ trainSize: numero di sample di train
 testSize: numero di sample di test
 attributes: numero di attributi per sample
 totalTime: tempo d'esecuzione che si vuole salvare
-fileName: nome del file di destinazione
 */
-void writeResult(
+int saveResultsOnFile(
 	int k, 
-	int trainSize, 
+	int trainSize,
 	int testSize, 
 	int attributes, 
-	float totalTime,
-	char *fileName);
+	float totalTime);
 
+/*
 void writeResultJson(
 	int k, 
 	int trainSize, 
@@ -59,5 +58,5 @@ void writeResultJson(
 	int attributes, 
 	float totalTime,
 	char *fileName);
-
+*/
 #endif

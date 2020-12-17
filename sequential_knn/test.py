@@ -1,15 +1,15 @@
 import subprocess 
 from tqdm import tqdm
 
-N = [64]
-M = [16]
+N = [10500]
+M = [4500]
 K = 5
 
 #subprocess.call("rm resultsKNN_mpi.out", shell= True)
 #lines = ["#ifndef INPUT\n", "#define INPUT\n", "#include <stdlib.h>\n", "#include <stdio.h>\n", "", "", "","", "#define LABELS 10\n", "typedef enum {true, false} bool;\n", "#endif\n"]
 for i in tqdm(range(len(N))):
-	trainFile = "../dataset/train_" + str(N[0])
-	testFile= "../dataset/test_" + str(M[0])
+	trainFile = "../dataset/train_" + str(N[i])
+	testFile= "../dataset/test_" + str(M[i])
 	'''
 	lines[4] = "#define M {}\n".format(M)
 	lines[5] = "#define N {}\n".format(N[i])
@@ -24,6 +24,6 @@ for i in tqdm(range(len(N))):
 		#subprocess.check_output(["make", "clean"])
 	#subprocess.check_output(["make"])
 	command = "./main.exe {} {} {} {} {}".format(trainFile, testFile, N[i], M[i], K)
-	#print(command)
+	print(command)
 	#subprocess.check_output(["make clean"])
 	subprocess.call(command, shell= True)
