@@ -1,10 +1,10 @@
 import subprocess
 
-N = [700, 3500, 7000]
-M = [300, 1500, 3000]
+N = [700, 3500, 7000, 10500]
+M = [300, 1500, 3000, 4500]
 K = 5
 LABELS = 10
-BLOCK_SIZE = [32]
+BLOCK_SIZE = [2, 4, 8, 16, 32]
 
 #lines = ["#ifndef INPUT\n", "#define INPUT\n", "#include <stdlib.h>\n", "#include <stdio.h>\n", "", "", "","", "", "#define LABELS 10\n", "#endif\n"]
 for j in range(len(BLOCK_SIZE)):
