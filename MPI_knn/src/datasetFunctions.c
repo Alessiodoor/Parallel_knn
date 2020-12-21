@@ -52,7 +52,7 @@ int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float 
 	FILE *fp;
 
 	int i, j;
-	char * wheretoprint = "resultsKNN_mpi.out";
+	char * wheretoprint = "resultsKNN_mpi.txt";
 	fp = fopen(wheretoprint,"a");
 
 	if (fp == NULL) {
