@@ -7,7 +7,7 @@ N = [10500]
 M = [4500]
 
 K = 5
-NP = [32]
+NP = [16]
 
 #subprocess.call("rm resultsKNN_mpi.out", shell= True)
 #lines = ["#ifndef INPUT\n", "#define INPUT\n", "#include <stdlib.h>\n", "#include <stdio.h>\n", "", "", "","", "#define LABELS 10\n", "typedef enum {true, false} bool;\n", "#endif\n"]
