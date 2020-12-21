@@ -96,7 +96,7 @@ int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float 
 	FILE *fp;
 
 	int i, j;
-	char * wheretoprint = "resultsSequential_openMP.out";
+	char * wheretoprint = "resultsSequential_openMP.txt";
 	fp = fopen(wheretoprint,"a");
 
 	if (fp == NULL) {

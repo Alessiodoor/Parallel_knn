@@ -89,7 +89,8 @@ def allocData(path, nAttr):
 
 #----------- KNN --------------
 
-def saveResults(K, trainSize, testSize, A, np, elapsedTime, fileName = 'resultsMpiPy.json'):
+def saveResults(K, trainSize, testSize, A, np, elapsedTime, fileName = 'resultsMpiPy.txt'):
+    '''
     if os.path.isfile(fileName):
         with open(fileName) as f:
             data = json.load(f)
@@ -105,9 +106,11 @@ def saveResults(K, trainSize, testSize, A, np, elapsedTime, fileName = 'resultsM
     result['NP'] = np
 
     data.append(result)
+    '''
+    result = "K: {}, trainSize: {}, testSize: {}, attributes: {}, totalTime: {}, NP: {}".format(K, trainSize, testSize, A, elapsedTime, np)
 
-    with open(fileName, 'w') as outfile:
-        json.dump(data, outfile)
+    with open(fileName, 'a') as outfile:
+        json.dump(result, outfile)
 
 def parallel_KNN(k, X_train, y_train, X_test, y_test):
     # MPI handling

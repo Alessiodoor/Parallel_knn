@@ -2,79 +2,97 @@ K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.516522
+ totalTime 0.163705
  NP 2
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 30.025921
+ totalTime 16.183821
  NP 2
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 206.458069
+ totalTime 207.950089
+ NP 2
+K 5
+ trainSize 10500
+ trainSize 4500
+ attributes 30
+ totalTime 705.849731
  NP 2
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.653989
+ totalTime 0.283924
  NP 4
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 24.583969
+ totalTime 24.870455
  NP 4
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 173.855621
+ totalTime 124.781265
+ NP 4
+K 5
+ trainSize 10500
+ trainSize 4500
+ attributes 30
+ totalTime 550.984070
  NP 4
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 2.638922
+ totalTime 0.277194
  NP 8
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 25.616850
+ totalTime 21.722914
  NP 8
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 173.942200
+ totalTime 126.878120
+ NP 8
+K 5
+ trainSize 10500
+ trainSize 4500
+ attributes 30
+ totalTime 427.134277
  NP 8
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 1.939741
+ totalTime 0.465128
  NP 16
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 25.893764
+ totalTime 19.667040
  NP 16
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 181.040924
+ totalTime 127.241318
  NP 16
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 1.044554
+ totalTime 1.245459
  NP 32
 K 5
  trainSize 3500
@@ -86,11 +104,5 @@ K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 196.821060
+ totalTime 129.492004
  NP 32
-K 5
- trainSize 10500
- trainSize 4500
- attributes 30
- totalTime 635.309021
- NP 4

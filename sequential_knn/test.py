@@ -1,8 +1,9 @@
 import subprocess 
 from tqdm import tqdm
 
-N = [10500]
-M = [4500]
+N = [700, 3500, 7000, 10500]
+M = [300, 1500, 3000, 4500]
+
 K = 5
 
 #subprocess.call("rm resultsKNN_mpi.out", shell= True)

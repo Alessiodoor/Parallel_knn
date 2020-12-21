@@ -309,6 +309,8 @@ void knn(
         MPI_Bcast(trainData, N * A, MPI_FLOAT, root_rank, MPI_COMM_WORLD);
         MPI_Bcast(trainClass, N, MPI_UINT8_T, root_rank, MPI_COMM_WORLD);
 
+        printf("fine bcast\n");
+
         // creo le variabili che conterranno la porzione di test assegnata al processo corrente
         float * localtestData = (float *) malloc(countsRow[rank] * sizeof(float));
         uint8_t * localtestClass = (uint8_t*)  malloc(countsRow[rank] / A * sizeof(uint8_t));   
@@ -385,7 +387,7 @@ void knn(
         {   
             // alloco la memoria dedicata al train
             float * trainData = (float *) malloc(N * A * sizeof(float));
-            uint8_t * trainClass = (uint8_t*) malloc(N *sizeof(uint8_t));
+            uint8_t * trainClass = (uint8_t*) malloc(N * sizeof(uint8_t));
             
             // alloco la memoria dedicata alla porzione locale di test
             float * localtestData = (float *) malloc(countsRow[rank] * sizeof(float));
