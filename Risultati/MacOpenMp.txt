@@ -2,119 +2,119 @@ K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.080867
+ totalTime 0.049782
  NP 2
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 1.072881
+ totalTime 0.762345
  NP 2
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 3.663179
+ totalTime 3.131216
  NP 2
 K 5
  trainSize 10500
  trainSize 4500
  attributes 30
- totalTime 8.083705
+ totalTime 6.550478
  NP 2
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.062133
+ totalTime 0.052966
  NP 4
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 0.897943
+ totalTime 0.756223
  NP 4
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 3.372057
+ totalTime 3.058151
  NP 4
 K 5
  trainSize 10500
  trainSize 4500
  attributes 30
- totalTime 7.505806
+ totalTime 6.506651
  NP 4
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.070932
+ totalTime 0.061100
  NP 8
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 0.897284
+ totalTime 0.754397
  NP 8
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 3.444168
+ totalTime 3.027908
  NP 8
 K 5
  trainSize 10500
  trainSize 4500
  attributes 30
- totalTime 7.399181
+ totalTime 6.539629
  NP 8
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.070352
+ totalTime 0.044090
  NP 16
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 0.891169
+ totalTime 0.829989
  NP 16
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 3.332938
+ totalTime 3.084744
  NP 16
 K 5
  trainSize 10500
  trainSize 4500
  attributes 30
- totalTime 7.364728
+ totalTime 6.663806
  NP 16
 K 5
  trainSize 700
  trainSize 300
  attributes 30
- totalTime 0.060766
+ totalTime 0.046319
  NP 32
 K 5
  trainSize 3500
  trainSize 1500
  attributes 30
- totalTime 0.896389
+ totalTime 0.753979
  NP 32
 K 5
  trainSize 7000
  trainSize 3000
  attributes 30
- totalTime 3.384968
+ totalTime 3.045323
  NP 32
 K 5
  trainSize 10500
  trainSize 4500
  attributes 30
- totalTime 7.393877
+ totalTime 6.654910
  NP 32
