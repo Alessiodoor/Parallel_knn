@@ -8,7 +8,7 @@ Parametri:
 train: sample di train
 test: sample di test
 */
-float euclideanDist(float* train, float* test, int M);
+float euclideanDist(float* train, float* test, int A);
 
 /*
 Funzione per ordinare ordinare i sample di train per il test i-esimo in base alla distanza tra train e test

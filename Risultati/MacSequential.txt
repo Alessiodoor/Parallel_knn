@@ -18,3 +18,8 @@ K 5
  trainSize 4500
  attributes 30
  totalTime 7.159476
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 51.540363

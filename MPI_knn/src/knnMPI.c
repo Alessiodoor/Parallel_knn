@@ -13,9 +13,9 @@ Parametri:
 train: sample di train
 test: sample di test
 */
-float euclideanDist(float* train, float* test, int M){
+float euclideanDist(float* train, float* test, int A){
     float sum = 0.f;
-    for (int d = 0; d < M; ++d) {
+    for (int d = 0; d < A; ++d) {
         const float diff = train[d] - test[d];
         sum += diff * diff;
     }
@@ -170,7 +170,7 @@ int localKnn(
             //calcolo la distanze euclidea con i sample di train
             for(int j = 0; j < N; j++){
                 // distanza euclidea tra il sample di test i-esimo e quello di train j-esimo
-                k_distances[j] = euclideanDist(&trainData[j * A], &localTestData[i * A], M);
+                k_distances[j] = euclideanDist(&trainData[j * A], &localTestData[i * A], A);
                 // salvo l'indice del sample di train 
                 k_labels[j] = j;
             }
@@ -308,8 +308,6 @@ void knn(
         // invio tutto il train ai processi tramite la funzione Broadcast, i riceventi la chiameranno la loro volta
         MPI_Bcast(trainData, N * A, MPI_FLOAT, root_rank, MPI_COMM_WORLD);
         MPI_Bcast(trainClass, N, MPI_UINT8_T, root_rank, MPI_COMM_WORLD);
-
-        printf("fine bcast\n");
 
         // creo le variabili che conterranno la porzione di test assegnata al processo corrente
         float * localtestData = (float *) malloc(countsRow[rank] * sizeof(float));

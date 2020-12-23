@@ -118,3 +118,33 @@ K 5
  attributes 30
  totalTime 6.654910
  NP 32
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 49.034863
+ NP 2
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 44.457924
+ NP 4
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 43.712605
+ NP 8
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 43.539402
+ NP 16
+K 5
+ trainSize 28000
+ trainSize 12000
+ attributes 30
+ totalTime 43.618084
+ NP 32
