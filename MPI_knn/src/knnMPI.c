@@ -185,7 +185,7 @@ int localKnn(
 
             int bestLabel = 0;
             
-            // scrorro i k sample di train vicini al sample di test i-esimo
+            // scorro i k sample di train vicini al sample di test i-esimo
             for(int j = 0; j < K; j++){ 
                 // salvo la classe del sample di train k-esimo
                 int indice = k_labels[j];

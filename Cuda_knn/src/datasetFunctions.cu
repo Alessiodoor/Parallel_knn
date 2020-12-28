@@ -79,7 +79,6 @@ int saveResultsOnFile(int k, int trainSize, int testSize, int attributes, float 
 	    return -1;
 	}
 
-	//fprintf(fp, "Test with %d process K = %d trainingData %d and testingData: %d , time: %f\n\n",size, K, N, M, time);
 	fprintf(fp, 
 		"K %d\n trainSize %d\n trainSize %d\n attributes %d\n totalTime %f\n NP %d\n", 
 		k, trainSize, testSize, attributes, totalTime, size

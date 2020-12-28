@@ -5,55 +5,62 @@
 #include <string.h>
 #include <math.h>
 
-
-//funzione kernel in cui ogni thread computa la distanza tra il proprio sample di test e tutti quelli del train
+/*
+Funzione kernel per calcolare la distanza euclidea tra gli attributi di un sample di train e uno di test
+Parametri:
+N: numero sample di train
+M: numero sample di test
+A: numero di attributi
+dev_train: sample di train sul device
+dev_test: sample di testsul device
+dev_distances: matrice delle distanze sul device
+*/
 __global__ void euclideanDistance_kernel(int N, int M, int A, const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances){//, int* dev_labels){
-	//indice inizio riga
 	
+	// indice di inizio della riga
 	int idx = threadIdx.x+blockDim.x*blockIdx.x;
   	int idy = threadIdx.y+blockDim.y*blockIdx.y;
 	
-	//printf("cx cy %d %d\n", cx, cy);
-	//check extra thread
+	// controllo che gli indici del thread siano corretti
 	if(idx < N && idy < M){
-		//printf("cx cy %d %d\n", cx, cy);
-		//__shared__ float train[M];
-		//trai
-		//__shared__ float test[M];
-		//__syncthreads();
 		float sum = 0.f;
+		// rendo parallela l'esecuzione del for, tra i threads del blocco
 	    #pragma unroll
 	    for (int d = 0; d < A; ++d) {
-	    	//__ldg(d_a + i)
 	    	float x = dev_train[idx*A +d];  
 	    	float y = dev_test[idy*A +d];
-	    	//loat x =__ldg(dev_train + idx*M + d);
-	    	//float y =__ldg(dev_test + idy*M + d);
 	        float diff = x - y;
 	        sum += diff * diff;
 	    }
-    //return 
-		dev_distances[(idy * N) + idx] = sqrtf(sum);//distanceFunction(&dev_train[cy*M], &dev_test[cx*M]);
-		//printf("%.2f \n", dev_distances[cx *N + cy]);
-		//dev_labels[cx* N + cy] = cy;
+		dev_distances[(idy * N) + idx] = sqrtf(sum);
 	}
 }
 
+/*
+Funzione kernel per ordinare ordinare i sample di train per il test i-esimo in base alla distanza tra train e test
+Questa funzione ordina i vicini di un solo sample di test.
+Parametri:
+distances: array delle distanze tra il sample di test i-esimo e tutti i sample di train
+index: array degli indici di tutti i sample di train per il sample id tst i-esimo
+N: numero di sample di train
+M: numero sample di test
+K: numero di vicini
+dev_distances: matrice delle distanze sul device
+dev_labels: label del sample di test 
+*/
 __global__ void sort_kernel(int N, int M, int K, float* __restrict__ dev_distances, int* __restrict__ dev_labels){
 	
-	//indice inizio riga
+	// indice di inizio della riga
 	int index = threadIdx.x + blockDim.x * blockIdx.x;
-	//printf(" %d ", index);
-	//check extra thread
+	// controllo che l'indici sia corretto
 	if(index < M){
 		dev_labels[index * K] = 0;
+		// rendo parallela l'esecuzione del for, tra i threads del blocco
 		#pragma unroll
 		for(int i=1; i< N; i++){
 			float distanzaCorrente = dev_distances[index*N+i];
         	int indiceCorrente = i;
-        	//dev_labels[index*K+i] = i;
-        	//printf("distanza corrente %f confronto con %f\n", distanzaCorrente, dev_distances[index*N+ K-1]);
-			if( i >= K && distanzaCorrente >= dev_distances[index*N+ K-1]){
+        	if( i >= K && distanzaCorrente >= dev_distances[index*N+ K-1]){
             	continue;
         	}
 			
