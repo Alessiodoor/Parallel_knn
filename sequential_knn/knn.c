@@ -136,8 +136,8 @@ void knn(
 		sort(&k_distances[i * M], &k_labels[i * M], K, N);
 		
 		//inizializza a zero il vettore contenente la migliore label per ogni sample di test
-		for(int i = 0; i < LABELS; i++){
-		   	countsLabel[i] = 0;
+		for(int j = 0; j < LABELS; j++){
+		   	countsLabel[j] = 0;
 		}
 		int bestLabel = 0;
 		

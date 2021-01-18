@@ -179,8 +179,8 @@ int localKnn(
             sort(k_distances, k_labels, N, K);
             
             //inizializza a zero l'array che conterrà la migliore label di ogni sample di test
-            for(int i = 0; i < LABELS; i++){
-                countsLabel[i] = 0;
+            for(int j = 0; j < LABELS; j++){
+                countsLabel[j] = 0;
             }
 
             int bestLabel = 0;
@@ -258,7 +258,7 @@ void knn(
 
     // i successivi quattro array servono per condividere la porzione di test tramite la funzione Scatterv
 
-    //numero di elementi del test che ogni processo assegnati ad ogni processo
+    //numero di elementi del test assegnati ad ogni processo
     int* countsRow = (int *) malloc(size * sizeof(int));
 
     //indirizzo di inizio della porzione di test assegnata ad ogni processo

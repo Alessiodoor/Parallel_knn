@@ -15,9 +15,12 @@ dev_train: sample di train sul device
 dev_test: sample di testsul device
 dev_distances: matrice delle distanze sul device
 */
-__global__ void euclideanDistance_kernel(int N, int M, int A, const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances){//, int* dev_labels){
+__global__ void euclideanDistance_kernel(int N, int M, int A, const float* __restrict__ dev_train, const float* __restrict__ dev_test, float* __restrict__ dev_distances){
 	
 	// indice di inizio della riga
+	// blockIdx.x: indice x-esimo all'interno della grid
+	// blockDim.x: numero di thread nel blocco nella direzione x-esima
+	// threadIdx.x: indice x-esimo all'interno del blocco
 	int idx = threadIdx.x+blockDim.x*blockIdx.x;
   	int idy = threadIdx.y+blockDim.y*blockIdx.y;
 	
