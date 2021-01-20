@@ -132,18 +132,18 @@ void knn(
 			//calcolo la distanza euclidea con tutti i punti del train
 			for(int j = 0; j < N; j++){
 				// calcolo distanza euclidea tra singolo train e test
-				k_distances[i*M + j] = euclideanDistance(&trainingData[j * A], &testingData[i * A]);
+				k_distances[i*N + j] = euclideanDistance(&trainingData[j * A], &testingData[i * A]);
 				// salvo la classe del train nella cella i, j
 				// i corrisponde all'i-esimo sample di test
 				// j corrisponde all'j-esimo sample di train
-				k_labels[i*M + j] = classesTraining[j];
+				k_labels[i*N + j] = classesTraining[j];
 			}
 		}
 		
 		
 		//ordino ogni distanza in base alle distanze calcolate precedentemente 
 		#pragma omp for schedule(guided, 1)
-		for(int i = 0; i < N; i++){
+		for(int i = 0; i < M; i++){
 			sort(&k_distances[i * M], &k_labels[i * M], K, N);
 		}
 	}

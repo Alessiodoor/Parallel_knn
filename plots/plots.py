@@ -149,11 +149,11 @@ mpi['32'] = [0.38, 1.71, 4.54, 7.14, 30.55]
 #best np=8
 
 openMp = {}
-openMp['2'] = [0.049, 0.76, 3.13, 6.55, 49.03]
-openMp['4'] = [0.052, 0.76, 3.06, 6.51, 44.46]
-openMp['8'] = [0.06, 0.75, 3.03, 6.54, 43.71] 
-openMp['16'] = [0.044, 0.83, 3.08, 6.66, 43.53] 
-openMp['32'] = [0.046, 0.75, 3.04, 6.65, 43.61] 
+openMp['2'] = [0.056, 0.71, 2.94, 6.19, 44.79]
+openMp['4'] = [0.06, 0.7, 2.89, 6.15, 42.18]
+openMp['8'] = [0.04, 0.7, 2.92, 6.08, 41.75] 
+openMp['16'] = [0.05, 0.76, 3.75, 6.99, 41.67] 
+openMp['32'] = [0.037, 0.69, 2.96, 6.71, 41.33] 
 #tutti simili
 
 mpiPy = {}
@@ -169,7 +169,7 @@ sequential['sequential'] = [0.05, 0.89, 3.3, 7.16, 51.54]
 # plotting single program 
 # ogni linea np diverso
 #plotSingleProgram(np_list, dataSize, mpi, "Confronto Mpi variando il numero di processi", "#process:", "confrontoMpi")
-#plotSingleProgram(np_list, dataSize, openMp, "Confronto OpenMp variando il numero di threads", "#thread:", "confrontoOpenMp")
+plotSingleProgram(np_list, dataSize, openMp, "Confronto OpenMp variando il numero di threads", "#thread:", "confrontoOpenMp")
 #plotSingleProgram(np_list, dataSize, mpiPy, "Confronto Mpi in python variando il numero di processi", "#process:", "confrontoMpiPy")
 #plotSingleProgram(["sequential"], dataSize, sequential, "Confronto Sequenziale", "")
 
@@ -187,7 +187,7 @@ best_list['mpi'] = bestMPI
 best_list['openMp'] = bestOpenMP
 best_list['sequential'] = sequential['sequential']
 
-#plotPrograms(best_list, labels, dataSize, "Confronto con sequenziale", "confrontoAll")
+plotPrograms(best_list, labels, dataSize, "Confronto con sequenziale", "confrontoAll")
 
 '''
 # confronto con versione in python
@@ -207,4 +207,4 @@ speedUpOpenMP = getSpeedUp(bestOpenMP, sequential['sequential'])
 
 print(speedUpMPI)
 print(speedUpOpenMP)
-#plotSpeedUp(speedUpMPI, speedUpOpenMP, dataSize, "speedup")
+plotSpeedUp(speedUpMPI, speedUpOpenMP, dataSize, "speedup")
