@@ -137,7 +137,6 @@ void knn(
 				// i corrisponde all'i-esimo sample di test
 				// j corrisponde all'j-esimo sample di train
 				k_labels[i*M + j] = classesTraining[j];
-				
 			}
 		}
 		
@@ -154,8 +153,8 @@ void knn(
 	for (int i = 0; i < M; ++i)
 	{
 		//inizializza a zero il vettore contenente la migliore label per ogni sample di test
-		for(int i = 0; i < LABELS; i++){
-		   	countsLabel[i] = 0;
+		for(int j = 0; j < LABELS; j++){
+		   	countsLabel[j] = 0;
 		}
 		int bestLabel = 0;
 
